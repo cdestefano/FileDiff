@@ -67,9 +67,10 @@ namespace FileDiff.Application.FileGenerator
         private async Task OutputFiles()
         {
             var result = _validDirectories.OrderBy(x => x);
+
             try
             {
-                await _file.WriteAllLines(_outputDirectory, result);
+                await _file.WriteAllLinesAsync(_outputDirectory, result);
             }
             catch (Exception ex)
             {

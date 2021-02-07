@@ -11,7 +11,7 @@ namespace FileDiff.Application.Validation
                 return false;
             }
 
-            if (!input.Contains("fileGenerator") || !input.Contains("fileRunner"))
+            if (!input.Contains("fileGenerator") && !input.Contains("fileRunner"))
             {
                 return false;
             }

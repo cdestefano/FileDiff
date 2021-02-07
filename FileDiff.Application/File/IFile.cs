@@ -5,6 +5,8 @@ namespace FileDiff.Application.File
 {
     public interface IFile
     {
-        Task WriteAllLines(string fileDirectory, IEnumerable<string> lines);
+        Task WriteAllLinesAsync(string fileDirectory, IEnumerable<string> lines);
+
+        Task<IEnumerable<string>> ReadAllLinesAsync(string fileDirectory);
     }
 }

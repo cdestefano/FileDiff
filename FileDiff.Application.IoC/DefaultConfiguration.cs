@@ -2,6 +2,7 @@
 using FileDiff.Application.Directory;
 using FileDiff.Application.File;
 using FileDiff.Application.FileGenerator;
+using FileDiff.Application.FileRunner;
 using FileDiff.Application.Validation;
 
 namespace FileDiff.Application.IoC
@@ -24,6 +25,7 @@ namespace FileDiff.Application.IoC
             builder.RegisterType<Directory.Directory>().As<IDirectory>();
             builder.RegisterType<File.File>().As<IFile>();
             builder.RegisterType<FileGenerator.FileGenerator>().As<IFileGenerator>();
+            builder.RegisterType<FileRunner.FileRunner>().As<IFileRunner>();
             builder.RegisterType<Input>().As<IInput>();
             builder.RegisterType<Validator>().As<IValidator>();
 
