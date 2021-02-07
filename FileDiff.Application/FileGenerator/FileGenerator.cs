@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using FileDiff.Application.Directory;
+using FileDiff.Application.File;
 using FileDiff.Application.Validation;
 
-namespace FileDiff.Application.Directory
+namespace FileDiff.Application.FileGenerator
 {
     public class FileGenerator : IFileGenerator
     {
         private readonly IDirectory _directory;
         private readonly IErrorLogger _errorLogger;
         private readonly IValidator _validator;
+        private readonly IFile _file;
 
         private readonly List<string> _validDirectories = new List<string>();
         private string _fileExtension;
@@ -17,20 +21,21 @@ namespace FileDiff.Application.Directory
         private string _fullFilePath;
         private string _outputDirectory;
 
-        public FileGenerator(IDirectory directory, IErrorLogger errorLogger, IValidator validator)
+        public FileGenerator(IDirectory directory, IErrorLogger errorLogger, IValidator validator, IFile file)
         {
             _directory = directory;
             _errorLogger = errorLogger;
             _validator = validator;
+            _file = file;
         }
 
-        public List<string> Process(string fullFilePath, string outputDirectory, string fileExtension)
+        public async Task<List<string>> Process(string fullFilePath, string outputDirectory, string fileExtension)
         {
             SetFileValues(fullFilePath, outputDirectory, fileExtension);
 
             ProcessDirectories();
 
-            OutputFiles();
+            await OutputFiles();
 
             return _validDirectories;
         }
@@ -59,12 +64,16 @@ namespace FileDiff.Application.Directory
             }
         }
 
-        private void OutputFiles()
+        private async Task OutputFiles()
         {
-            var results = _validDirectories.OrderBy(x => x);
-            foreach (var result in results)
+            var result = _validDirectories.OrderBy(x => x);
+            try
             {
-                Console.WriteLine(result);
+                await _file.WriteAllLines(_outputDirectory, result);
+            }
+            catch (Exception ex)
+            {
+                _errorLogger.LogError(ex);
             }
         }
     }

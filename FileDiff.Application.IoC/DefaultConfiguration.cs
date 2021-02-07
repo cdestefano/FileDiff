@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using FileDiff.Application.Directory;
+using FileDiff.Application.File;
+using FileDiff.Application.FileGenerator;
 using FileDiff.Application.Validation;
 
 namespace FileDiff.Application.IoC
@@ -20,7 +22,8 @@ namespace FileDiff.Application.IoC
         private void RegisterComponents(ContainerBuilder builder)
         {
             builder.RegisterType<Directory.Directory>().As<IDirectory>();
-            builder.RegisterType<FileGenerator>().As<IFileGenerator>();
+            builder.RegisterType<File.File>().As<IFile>();
+            builder.RegisterType<FileGenerator.FileGenerator>().As<IFileGenerator>();
             builder.RegisterType<Input>().As<IInput>();
             builder.RegisterType<Validator>().As<IValidator>();
 

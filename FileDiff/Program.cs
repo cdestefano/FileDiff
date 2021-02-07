@@ -1,19 +1,20 @@
-﻿using Autofac;
-using FileDiff.Application.Directory;
+﻿using System.Threading.Tasks;
+using Autofac;
+using FileDiff.Application.FileGenerator;
 using FileDiff.Application.IoC;
 
 namespace FileDiff
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             var defaultConfiguration = new DefaultConfiguration();
 
             using (var scope = defaultConfiguration.Container.BeginLifetimeScope())
             {
                 var directoryProcessor = scope.Resolve<IFileGenerator>();
-                directoryProcessor.Process(args[0], args[1], args[2]);
+                await directoryProcessor.Process(args[0], args[1], args[2]);
             }
         }
     }
