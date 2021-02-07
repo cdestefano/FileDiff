@@ -65,7 +65,8 @@ namespace FileDiff.Application.FileGenerator
             }
         }
 
-        private string GetLocalDirectoryName(string directory) => directory.Replace(_fullFilePath, string.Empty);
+        private string GetLocalDirectoryName(string directory) =>
+            directory.Replace(_fullFilePath, string.Empty).Trim(new []{ '/', '\\'});
 
         private async Task OutputFiles()
         {
