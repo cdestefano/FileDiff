@@ -56,13 +56,16 @@ namespace FileDiff.Application.FileGenerator
             }
         }
 
-        private void ProcessSingleDirectory(string directory)
+        private void ProcessSingleDirectory(string fullPathToDirectory)
         {
-            if (_validator.Validate(directory, _fileExtension))
+            if (_validator.Validate(fullPathToDirectory, _fileExtension))
             {
-                _validDirectories.Add(directory);
+                var directoryName = GetLocalDirectoryName(fullPathToDirectory);
+                _validDirectories.Add(directoryName);
             }
         }
+
+        private string GetLocalDirectoryName(string directory) => directory.Replace(_fullFilePath, string.Empty);
 
         private async Task OutputFiles()
         {
